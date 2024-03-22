@@ -6,10 +6,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import servlet.dto.SdDTO;
+import servlet.DTO.SdDTO;
 import servlet.service.ServletService;
+import servlet.service.TlService;
 
 @Controller
 public class ServletController {
@@ -19,17 +20,21 @@ public class ServletController {
    @Resource(name="TlService")
    private TlService TlService;
    
-   @GetMapping(value = "/main.do")
+   @RequestMapping(value = "/main.do")
    public String mainTest(ModelMap model) throws Exception {
+	   
       List<SdDTO> list = TlService.selectSd();
       model.addAttribute("sdlist",list);
       
+      System.out.println(list.get(0).getSd_nm());
       return "main/main";
    }
    
    
-   @GetMapping("/test.do")
+   @RequestMapping("/test.do")
    public String test() {
       return "main/test";
    }
+
+   
 }

@@ -1,3 +1,4 @@
+/*
 package servlet.impl;
 
 import java.util.List;
@@ -22,3 +23,4 @@ public class ServletImpl extends EgovAbstractServiceImpl implements ServletServi
 		return str + " -> testImpl ";
 	}
 }
+*/
