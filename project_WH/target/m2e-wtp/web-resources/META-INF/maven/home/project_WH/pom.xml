@@ -18,16 +18,12 @@
 	</licenses>
 
 	<properties>
-		<java-version>1.8</java-version>
 		<spring.maven.artifact.version>4.3.25.RELEASE</spring.maven.artifact.version>
 		<egovframework.rte.version>3.10.0</egovframework.rte.version>
-
 	</properties>
 
 	<repositories>
-
 		<repository>
-
 			<id>mvn2s</id>
 			<url>https://repo1.maven.org/maven2/</url>
 			<releases>
@@ -60,8 +56,27 @@
 	</repositories>
 
 	<dependencies>
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.2</version>
+		</dependency>
 
 
+		<!-- jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- 표준프레임워크 실행환경 -->
 		<dependency>
 			<groupId>egovframework.rte</groupId>
@@ -74,13 +89,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-           <groupId>org.projectlombok</groupId>
-           <artifactId>lombok</artifactId>
-           <version>1.18.22</version>
-           <scope>provided</scope>
-       </dependency>
-       
 		<dependency>
 			<groupId>egovframework.rte</groupId>
 			<artifactId>egovframework.rte.psl.dataaccess</artifactId>
@@ -210,12 +218,6 @@
 		<finalName>${artifactId}-${version}</finalName>
 		<pluginManagement>
 			<plugins>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.2</version>
-			</plugin>
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
