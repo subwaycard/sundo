@@ -1,6 +1,7 @@
 package servlet.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class TlServiceImpl implements TlService{
 	@Override
 	public List<SdDTO> selectSd() {
 		return sdDAO.selectSd();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGeom(String name) {
+		return sggDAO.selectGeom(name);
 	}
 
 

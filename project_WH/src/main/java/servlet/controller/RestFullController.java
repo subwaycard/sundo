@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import servlet.DTO.SggDTO;
+import servlet.service.FileService;
 import servlet.service.TlService;
 
 @RestController
@@ -25,13 +26,23 @@ public class RestFullController {
     @Resource(name="TlService")
     private TlService tlService;
     
-    @PostMapping("/selectSgg.do")
-    public List<SggDTO> selectSgg(@RequestParam("test") String name){
-        List<SggDTO> list=tlService.selectSgg(name);
-        System.out.println(list);      
-        return list;
-        }
+    @Resource(name="FileService")
+    private FileService fileService;
     
+    @PostMapping("/selectSgg.do")
+	public Map<String,Object> selectSgg(@RequestParam("test") String name) {
+		List<SggDTO> list = tlService.selectSgg(name);
+		List<Map<String, Object>> geom = tlService.selectGeom(name);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("geom", geom);
+		
+		System.out.println(list);
+		return map;
+	}
+
     @PostMapping("/fileUpload.do")
     public void fileUpload(@RequestParam("testfile") MultipartFile multi) throws IOException {
        
@@ -52,26 +63,28 @@ public class RestFullController {
           String[] lineArr = line.split("\\|");
           
           System.out.println(Arrays.toString(lineArr));
-          m.put("usage_year_month", lineArr[0]);   //사용_년월   date
-          m.put("land_location",   lineArr[1]);   //대지_위치   addr
-          m.put("road_name_land_location",lineArr[2]);   //도로명_대지_위치   newAddr
-          m.put("city_code",   lineArr[3]);   //시군구_코드   sigungu
-          m.put("legal_code",   lineArr[4]);   //법정동_코드   bubjungdong
-          m.put("classification_code",lineArr[5]);   //대지_구분_코드   addrCode
-          m.put("lot", lineArr[6]);   //번   bun
-          m.put("parcel",   lineArr[7]);   //지   si
-          m.put("new_address_no",   lineArr[8]);   //새주소_일련번호   newAddrCode
-          m.put("new_street_code", lineArr[9]);   //새주소_도로_코드   newAddr
-          m.put("new_address_land_code", lineArr[10]);//새주소_지상지하_코드newAddrUnder
-          m.put("new_address_bon_no",   lineArr[11]==""?Integer.parseInt(lineArr[11]):0);   //새주소_본_번   newAddrBun
-          m.put("new_address_bu_no",   lineArr[12]==""?Integer.parseInt(lineArr[12]):0);   //새주소_부_번   newAddrBun2
-          m.put("amount_kwh",   lineArr[13]==""?Integer.parseInt(lineArr[13]):0);   //사용_량(KWh)   usekwh
-          
-          list.add(m);
+			m.put("yearMonthUse", lineArr[0]); // 사용년월
+			m.put("landLocation", lineArr[1]); // 대지위치
+			m.put("roadLandLocation", lineArr[2]); // 도로명대지위치 
+			m.put("sggCode", lineArr[3]); // 시군구코드
+			m.put("bjdCode", lineArr[4]); // 법정동코드 
+			m.put("landCode", lineArr[5]); // 대지구분코드 
+			m.put("bun", lineArr[6]); // 번 
+			m.put("ji", lineArr[7]); // 지 
+			m.put("newAddNumber", lineArr[8]); // 새주소일련번호
+			m.put("newRoadCode", lineArr[9]); // 새주소도로코드 
+			m.put("newLandCode", lineArr[10]);// 새주소지상지하코드
+			m.put("newbonbeon", !lineArr[11].isEmpty() ? Integer.parseInt(lineArr[11]) : 0); // 새주소본번 
+			m.put("newbubeon", lineArr[12] == "" ? Integer.parseInt(lineArr[12]) : 0); // 새주소부번 
+			m.put("usage", lineArr[13] == "" ? Integer.parseInt(lineArr[13]) : 0); // 사용량
+         
+			list.add(m);
+
        }
        fileService.uploadFile(list);
        
        br.close();
        isr.close();
     }
-    }
+    
+   }

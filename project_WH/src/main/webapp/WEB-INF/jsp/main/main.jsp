@@ -40,6 +40,7 @@
          view : olview
       });
 
+
       $("#sdselect").on("change", function() {
          var test = $("#sdselect option:checked").text();
          $.ajax({
@@ -48,14 +49,51 @@
             dataType : "json",
             data : {"test" : test},
             success : function(result) {
+               var list = result.list;
+               alert(list);
+               var geom = result.geom;
                $("#sgg").empty();
-               var sgg = "<option>시군구 선택</option>";
+               var sgg = "<option>시군구 선택</option>";               
+                   for (var i = 0; i < list.length; i++) {
+                   sgg += "<option value='"+list[i].sgg_cd+"'>"
+                         + list[i].sgg_nm + "</option>"
+               } 
                
-               for(var i=0;i<result.length;i++){
-                  sgg += "<option value='"+result[i].sgg_cd+"'>"+result[i].sgg_nm+"</option>"
-               }
+               
                
                $("#sgg").append(sgg);
+               
+               //  지도확대
+               map.getView().fit([geom[0].xmin, geom[0].ymin, geom[0].xmax, geom[0].ymax],{
+                   duration:900
+                });
+
+                map.removeLayer(sd);
+                var sd_CQL1 = "sd_cd=" + $("#sdselect").val();
+                
+                var sdSource = new ol.source.TileWMS(
+                      {
+                         url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
+                         params : {
+                            'VERSION' : '1.1.0', // 2. 버전
+                            'LAYERS' : 'ne:tl_sd', // 3. 작업공간:레이어 명
+                            'CQL_FILTER' : sd_CQL1,
+                            'BBOX' : [ 1.3867446E7,3906626.5,1.4684055E7,4670269.5],
+                            'SRS' : 'EPSG:3857', // SRID
+                            'FORMAT' : 'image/png', // 포맷
+                            'TRANSPARENT' : 'TRUE',
+
+                         },
+                         serverType : 'geoserver',
+                      });
+
+                sd = new ol.layer.Tile({
+                   source : sdSource,
+                   opacity : 0.5
+                });
+
+            //    map.addLayer(sd);
+              
             },
             error : function() {
                alert("실패");
@@ -73,10 +111,10 @@
          var sgg_CQL = "sgg_cd="+$("#sgg").val();
          
          var sdSource = new ol.source.TileWMS({
-            url : 'http://localhost/geoserver/cite/wms?service=WMS', // 1. 레이어 URL
-            params : {
+        	 url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
+             params : {
                'VERSION' : '1.1.0', // 2. 버전
-               'LAYERS' : '	cite:tl_sd', // 3. 작업공간:레이어 명
+               'LAYERS' : '	ne:tl_sd', // 3. 작업공간:레이어 명
                'CQL_FILTER' : sd_CQL,
                'BBOX' : [1.3871489341071218E7,3910407.083927817,1.4680011171788167E7,4666488.829376997],
                'SRS' : 'EPSG:3857', // SRID
@@ -94,16 +132,16 @@
 
          //for(var i in sd) sd[i].setStyle(style);
 
-         //map.addLayer(sd); // 맵 객체에 레이어를 추가함
+        // map.addLayer(sd); // 맵 객체에 레이어를 추가함
 
          sgg = new ol.layer.Tile({
             source : new ol.source.TileWMS({
-               url : 'http://localhost/geoserver/cite/wms?service=WMS', // 1. 레이어 URL
+               url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
                params : {
                   'VERSION' : '1.1.0', // 2. 버전
-                  'LAYERS' : 'cite:tl_sgg', // 3. 작업공간:레이어 명
+                  'LAYERS' : '	ne:tl_sgg', // 3. 작업공간:레이어 명
                   'CQL_FILTER' : sgg_CQL,
-          	   'BBOX' : [1.3871489341071218E7,3910407.083927817,1.4680011171788167E7,4666488.829376997],
+          	   'BBOX' : [1.386872E7,3906626.5,1.4428071E7,4670269.5],
                   'SRS' : 'EPSG:3857', // SRID
                   'FORMAT' : 'image/png', // 포맷
                   'FILLCOLOR' : '#5858FA'
@@ -112,7 +150,7 @@
             })
          });
 
-         //map.addLayer(sgg); // 맵 객체에 레이어를 추가함
+      //   map.addLayer(sgg); // 맵 객체에 레이어를 추가함
          
          
 
@@ -120,12 +158,12 @@
                {
                   source : new ol.source.TileWMS(
                         {
-                           url : 'http://localhost/geoserver/cite/wms?service=WMS', // 1. 레이어 URL
+                           url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
                            params : {
                               'VERSION' : '1.1.0', // 2. 버전
-                              'LAYERS' : '	cite:tl_bjd', // 3. 작업공간:레이어 명
+                              'LAYERS' : 'ne:tl_bjd', // 3. 작업공간:레이어 명
                               'CQL_FILTER' : sgg_CQL,
-                            	 'BBOX' : [1.386872E7,3906626.5,1.4428071E7,4670269.5],
+                            	 'BBOX' : [1.3873946E7,3906626.5,1.4428045E7,4670269.5],
                               'SRS' : 'EPSG:3857', // SRID
                               'FORMAT' : 'image/png', // 포맷
                               'FILLCOLOR' : '#5858FA'
@@ -135,12 +173,12 @@
                   opacity : 0.8
                });
 
-         //map.addLayer(bjd); // 맵 객체에 레이어를 추가함
+       // map.addLayer(bjd); // 맵 객체에 레이어를 추가함
          
          
-         map.addLayer(sd);
-         map.addLayer(sgg);
-         map.addLayer(bjd);
+        map.addLayer(sd);
+        map.addLayer(sgg);
+        map.addLayer(bjd);
       });
       
       $("#transdb").on("click", function() {
@@ -154,7 +192,9 @@
             $("#txtfile").val("");
             return false;
          }
+         console.log(formData); // FormData 객체 확인
 
+ 
          $.ajax({
             url : "/fileUpload.do",
             type : 'post',
@@ -210,9 +250,6 @@
       $('#mask').show();
       $('#loading').show();
    }
-
-
-   });
 </script>
 
 <style type="text/css">
@@ -242,7 +279,13 @@
                <option selected="selected">범례 선택</option>
             </select>
 
-            <button id="insertbtn" class="insertbtn">입력하기</button>
+         <button id="insertbtn" class="insertbtn">입력하기</button>
+             <form id="uploadForm">
+               <input type="file" accept=".txt" id="txtfile" name="txtfile">
+            </form>
+            <button id="transdb">전송하기</button>
+
+         
          </div>
          <div class="map" id="map"></div>
       </div>
