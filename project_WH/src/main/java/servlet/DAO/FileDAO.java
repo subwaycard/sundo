@@ -1,6 +1,5 @@
 package servlet.DAO;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -8,20 +7,16 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import servlet.DTO.SggDTO;
-
-
 @Repository
-public class SggDAO {
-	
+public class FileDAO {
+
 	@Autowired
 	private SqlSession sqlSession;
-	
-	public List<SggDTO> selectSgg(String name) {
-		return sqlSession.selectList("SggMapper.selectSgg", name);
-	}
 
-	public List<Map<String, Object>> selectGeom(String name) {
-		return sqlSession.selectList("SggMapper.selectGeom",name);
+	public void uploadFile(List<Map<String, Object>> list) {
+		for (Map<String, Object> data : list) {
+			sqlSession.insert("uploadFile.uploadFile", data);
+		}
+		System.out.println("dao다");
 	}
 }
