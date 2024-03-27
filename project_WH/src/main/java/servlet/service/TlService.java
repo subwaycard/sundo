@@ -17,4 +17,6 @@ public interface TlService {
 
 	List<Map<String, Object>> selectGeom(String name);
 
+	Map<String, Object> selectB(String name);
+
 }

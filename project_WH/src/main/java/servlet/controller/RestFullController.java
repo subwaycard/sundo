@@ -42,6 +42,15 @@ public class RestFullController {
 		System.out.println(list);
 		return map;
 	}
+    
+    @PostMapping("/selectB.do")
+	public Map<String,Object> selectB(@RequestParam("sggdata") String name) {
+		Map<String, Object> geom = tlService.selectB(name);
+	      System.out.println(geom);
+	      System.out.println(name);
+	      return geom;
+	   }
+
 
     @PostMapping("/fileUpload.do")
     public void fileUpload(@RequestParam("testfile") MultipartFile multi) throws IOException {
