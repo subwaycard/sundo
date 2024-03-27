@@ -50,8 +50,9 @@
             data : {"test" : test},
             success : function(result) {
                var list = result.list;
-               alert(list);
+               //alert(list);
                var geom = result.geom;
+				               
                $("#sgg").empty();
                var sgg = "<option>시군구 선택</option>";               
                    for (var i = 0; i < list.length; i++) {
@@ -59,26 +60,23 @@
                          + list[i].sgg_nm + "</option>"
                } 
                
-               
-               
                $("#sgg").append(sgg);
                
                //  지도확대
                map.getView().fit([geom[0].xmin, geom[0].ymin, geom[0].xmax, geom[0].ymax],{
-                   duration:900
+                   duration:800
                 });
 
                 map.removeLayer(sd);
                 var sd_CQL1 = "sd_cd=" + $("#sdselect").val();
                 
-                var sdSource = new ol.source.TileWMS(
-                      {
-                         url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
+                var sdSource = new ol.source.TileWMS({
+                         url : 'http://172.30.1.65:8080/geoserver/suk/wms?service=WMS', // 1. 레이어 URL
                          params : {
                             'VERSION' : '1.1.0', // 2. 버전
-                            'LAYERS' : 'ne:tl_sd', // 3. 작업공간:레이어 명
+                            'LAYERS' : 'suk:tl_sd', // 3. 작업공간:레이어 명
                             'CQL_FILTER' : sd_CQL1,
-                            'BBOX' : [ 1.3867446E7,3906626.5,1.4684055E7,4670269.5],
+                            'BBOX' : [1.3867446E7,3906626.5,1.4684055E7,4670269.5],
                             'SRS' : 'EPSG:3857', // SRID
                             'FORMAT' : 'image/png', // 포맷
                             'TRANSPARENT' : 'TRUE',
@@ -92,78 +90,81 @@
                    opacity : 0.5
                 });
 
-            //    map.addLayer(sd);
-              
-            },
-            error : function() {
-               alert("실패");
+               map.addLayer(sd);
+               
+               
+            },error:function(){
+           	 alert("실패");
             }
          })
       });
+      
+                    
+           	$("#sgg").on("change",function(){
+           	 var sggdata = $("#sgg option:checked").text();
+           	 console.log(sggdata);
+            // alert(sggValue);
+			
+			
+           		 	$.ajax({
+           			url : "/selectB.do",
+                    type : "post",
+                    dataType : "json",
+                    data : {"sggdata" : sggdata}, 
+                    success : function(result) {
+                   	//result값을 json으로 parse시키고 bbox를 가져옴
+                   var bList = result.list;
+				map.getView().fit([result.xmin, result.ymin, result.xmax, result.ymax], {duation : 900}); 
+
+                   /*  var geom = result.geom;
+                    map.getView().fit([geom[0].xmin, geom[0].ymin, geom[0].xmax, geom[0].ymax],{
+                        duration:900
+                    }); */
+                    map.removeLayer(sgg);
+                    var sgg_CQL = "sgg_cd=" + sggdata;
+                    	
+                    	source: new ol.source.TileWMS({
+         				 url : 'http://172.30.1.65:8080/geoserver/suk/wms?service=WMS', // 1. 레이어 URL
+         				 params : {
+            			 'VERSION' : '1.1.0', // 2. 버전
+            			 'LAYERS' : 'suk:tl_sgg', // 3. 작업공간:레이어 명
+           				  'CQL_FILTER' : sgg_CQL,
+           				  'BBOX' : [1.386872E7,3906626.5,1.4428071E7,4670269.5],
+          				   'SRS' : 'EPSG:3857', // SRID
+           				  'FORMAT' : 'image/png', // 포맷
+            			 //'FILLCOLOR' : '#5858FA'
+                         },
+                         serverType : 'geoserver',
+                    });
+        			sgg = new ol.layer.Tile({
+        				source : sgg,
+        	            opacity: 0.5
+                     });
+        			map.addLayer(sgg);                                  
+                 },
+                 error : function() {
+                    alert("실패");
+                 }
+              })
+           });
+   
+
 
       $("#insertbtn").click(function() {
-
-         map.removeLayer(sd);
-         map.removeLayer(sgg);
+       //  map.removeLayer(sgg);
          map.removeLayer(bjd);
          
-         var sd_CQL = "sd_cd="+$("#sdselect").val();
-         var sgg_CQL = "sgg_cd="+$("#sgg").val();
-         
-         var sdSource = new ol.source.TileWMS({
-        	 url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
-             params : {
-               'VERSION' : '1.1.0', // 2. 버전
-               'LAYERS' : '	ne:tl_sd', // 3. 작업공간:레이어 명
-               'CQL_FILTER' : sd_CQL,
-               'BBOX' : [1.3871489341071218E7,3910407.083927817,1.4680011171788167E7,4666488.829376997],
-               'SRS' : 'EPSG:3857', // SRID
-               'FORMAT' : 'image/png', // 포맷
-               'TRANSPARENT' : 'TRUE',
-
-            },
-            serverType : 'geoserver',
-         });
-
-         sd = new ol.layer.Tile({
-            source : sdSource,
-            opacity : 0.5
-         });
-
-         //for(var i in sd) sd[i].setStyle(style);
-
-        // map.addLayer(sd); // 맵 객체에 레이어를 추가함
-
-         sgg = new ol.layer.Tile({
-            source : new ol.source.TileWMS({
-               url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
-               params : {
-                  'VERSION' : '1.1.0', // 2. 버전
-                  'LAYERS' : '	ne:tl_sgg', // 3. 작업공간:레이어 명
-                  'CQL_FILTER' : sgg_CQL,
-          	   'BBOX' : [1.386872E7,3906626.5,1.4428071E7,4670269.5],
-                  'SRS' : 'EPSG:3857', // SRID
-                  'FORMAT' : 'image/png', // 포맷
-                  'FILLCOLOR' : '#5858FA'
-               },
-               serverType : 'geoserver',
-            })
-         });
-
-      //   map.addLayer(sgg); // 맵 객체에 레이어를 추가함
-         
-         
-
-         bjd = new ol.layer.Tile(
+      
+               bjd = new ol.layer.Tile(
                {
                   source : new ol.source.TileWMS(
                         {
-                           url : 'http://172.30.1.65:8080/geoserver/ne/wms?service=WMS', // 1. 레이어 URL
+                           url : 'http://172.30.1.65:8080/geoserver/suk/wms?service=WMS', // 1. 레이어 URL
                            params : {
                               'VERSION' : '1.1.0', // 2. 버전
-                              'LAYERS' : 'ne:tl_bjd', // 3. 작업공간:레이어 명
+                              'LAYERS' : 'suk:tl_bjd', // 3. 작업공간:레이어 명
                               'CQL_FILTER' : sgg_CQL,
-                            	 'BBOX' : [1.3873946E7,3906626.5,1.4428045E7,4670269.5],
+                              'BBOX' : [1.3873946E7,3906626.5,1.4428045E7,4670269.5],
                               'SRS' : 'EPSG:3857', // SRID
                               'FORMAT' : 'image/png', // 포맷
                               'FILLCOLOR' : '#5858FA'
@@ -173,11 +174,9 @@
                   opacity : 0.8
                });
 
-       // map.addLayer(bjd); // 맵 객체에 레이어를 추가함
-         
-         
-        map.addLayer(sd);
-        map.addLayer(sgg);
+       // map.addLayer(bjd); // 맵 객체에 레이어를 추가함       
+        
+      //  map.addLayer(sgg);
         map.addLayer(bjd);
       });
       
@@ -273,9 +272,13 @@
             
             <select id="sgg">
                <option>시군구 선택</option>
+               <c:forEach items="${list }" var="sgg">
+                  <option class="sgg" value="${sgg.sgg_cd }">${sgg.sgg_nm}</option>
+               </c:forEach>
+               
             </select> 
             
-            <select>
+            <select id="">
                <option selected="selected">범례 선택</option>
             </select>
 

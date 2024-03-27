@@ -24,4 +24,10 @@ public class SggDAO {
 	public List<Map<String, Object>> selectGeom(String name) {
 		return sqlSession.selectList("SggMapper.selectGeom",name);
 	}
+
+	public Map<String, Object> selectB(String name) {
+	System.out.println("다오");
+		return sqlSession.selectOne("SggMapper.selectB", name);
+	}
+	
 }

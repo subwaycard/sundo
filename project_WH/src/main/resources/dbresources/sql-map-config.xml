@@ -9,6 +9,7 @@
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="selectSd" type="servlet.DTO.SdDTO"/>
 		<typeAlias alias="selectSgg" type="servlet.DTO.SggDTO"/>
+		<typeAlias alias="selectB" type="servlet.DTO.SggDTO"/>
 	
 	</typeAliases>
 </configuration>

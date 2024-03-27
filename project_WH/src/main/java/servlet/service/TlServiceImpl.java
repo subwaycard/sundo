@@ -35,5 +35,11 @@ public class TlServiceImpl implements TlService{
 		return sggDAO.selectGeom(name);
 	}
 
+	@Override
+	public Map<String, Object> selectB(String name) {
+		
+		return sggDAO.selectB(name);
+	}
+
 
 }
