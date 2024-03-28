@@ -37,7 +37,6 @@ public class TlServiceImpl implements TlService{
 
 	@Override
 	public Map<String, Object> selectB(String name) {
-		
 		return sggDAO.selectB(name);
 	}
 

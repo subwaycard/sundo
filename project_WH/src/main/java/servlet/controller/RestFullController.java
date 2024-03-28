@@ -71,7 +71,8 @@ public class RestFullController {
           Map<String, Object> m = new HashMap<String, Object>();
           String[] lineArr = line.split("\\|");
           
-          System.out.println(Arrays.toString(lineArr));
+          
+			System.out.println(Arrays.toString(lineArr));
 			m.put("yearMonthUse", lineArr[0]); // 사용년월
 			m.put("landLocation", lineArr[1]); // 대지위치
 			m.put("roadLandLocation", lineArr[2]); // 도로명대지위치 
@@ -84,11 +85,10 @@ public class RestFullController {
 			m.put("newRoadCode", lineArr[9]); // 새주소도로코드 
 			m.put("newLandCode", lineArr[10]);// 새주소지상지하코드
 			m.put("newbonbeon", !lineArr[11].isEmpty() ? Integer.parseInt(lineArr[11]) : 0); // 새주소본번 
-			m.put("newbubeon", lineArr[12] == "" ? Integer.parseInt(lineArr[12]) : 0); // 새주소부번 
-			m.put("usage", lineArr[13] == "" ? Integer.parseInt(lineArr[13]) : 0); // 사용량
+			m.put("newbubeon", lineArr[12].equals("") ? 0 : Integer.parseInt(lineArr[12]));
+			m.put("usage", lineArr[13].equals("") ? 0 : Integer.parseInt(lineArr[13]));
          
 			list.add(m);
-
        }
        fileService.uploadFile(list);
        
