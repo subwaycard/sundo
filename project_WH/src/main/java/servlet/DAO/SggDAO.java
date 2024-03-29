@@ -29,5 +29,10 @@ public class SggDAO {
 	System.out.println("다오");
 		return sqlSession.selectOne("SggMapper.selectB", name);
 	}
+
+	public Map<String, Object> LegendInfo(String name) {
+		
+		return sqlSession.selectOne("SggMapper.LegendInfo", name);
+	}
 	
 }
