@@ -20,5 +20,13 @@
       ,(select ST_YMin(geom) as ymin FROM tl_sgg WHERE  sgg_nm = #{name}::varchar order by ymin limit 1)
           from tl_sd limit 1
    </select>
+   
+      <select id="LegendInfo" parameterType="String" resultType="Map">
+    select (select ST_XMax(geom) as xmax FROM tl_bjd WHERE bjd_nm = #{name}::varchar order by xmax desc limit 1)
+      ,(select ST_YMax(geom) as ymax FROM tl_bjd WHERE  bjd_nm = #{name}::varchar order by ymax desc limit 1)
+      ,(select  ST_XMin(geom) as xmin FROM tl_bjd WHERE  bjd_nm = #{name}::varchar order by xmin  limit 1)
+      ,(select ST_YMin(geom) as ymin FROM tl_bjd WHERE  bjd_nm = #{name}::varchar order by ymin limit 1)
+          from tl_sd limit 1
+   </select>
 
 </mapper>

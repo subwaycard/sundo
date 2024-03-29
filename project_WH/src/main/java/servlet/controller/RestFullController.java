@@ -50,6 +50,9 @@ public class RestFullController {
 	      System.out.println(name);
 	      return geom;
 	   }
+    
+     
+    
 
 
     @PostMapping("/fileUpload.do")

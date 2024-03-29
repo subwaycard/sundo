@@ -40,5 +40,10 @@ public class TlServiceImpl implements TlService{
 		return sggDAO.selectB(name);
 	}
 
+	@Override
+	public Map<String, Object> LegendInfo(String name) {
+		return sggDAO.LegendInfo(name);
+	}
+
 
 }

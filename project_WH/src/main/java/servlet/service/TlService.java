@@ -19,4 +19,6 @@ public interface TlService {
 
 	Map<String, Object> selectB(String name);
 
+	Map<String, Object> LegendInfo(String name);
+
 }
