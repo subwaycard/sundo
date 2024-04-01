@@ -52,7 +52,11 @@ public class RestFullController {
 	   }
     
      
-    
+    @PostMapping("/legend.do")
+    public Map<String, Object> legend(@RequestParam("legend") String legend) {
+        Map<String, Object> response = new HashMap<>();
+        return response;
+    }
 
 
     @PostMapping("/fileUpload.do")
@@ -98,5 +102,6 @@ public class RestFullController {
        br.close();
        isr.close();
     }
+    
     
    }
