@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import servlet.DAO.BeomDAO;
+import servlet.DAO.ChartDAO;
 import servlet.DAO.SdDAO;
 import servlet.DAO.SggDAO;
 import servlet.DTO.SdDTO;
@@ -19,6 +21,12 @@ public class TlServiceImpl implements TlService{
 	
 	@Autowired
 	private SggDAO sggDAO;	
+	
+	@Autowired
+	private BeomDAO beomDAO;
+	
+	@Autowired
+	private ChartDAO chartDAO;
 	
 	@Override
 	public List<SggDTO> selectSgg(String name) {
@@ -44,6 +52,29 @@ public class TlServiceImpl implements TlService{
 	public Map<String, Object> LegendInfo(String name) {
 		return sggDAO.LegendInfo(name);
 	}
+
+	@Override
+	public List<Map<String, Object>> natural() {
+		return beomDAO.natural();
+	}
+
+	@Override
+	public List<Map<String, Object>> deung() {
+		return beomDAO.deung();
+	}
+
+	@Override
+	public List<Map<String, Object>> sdChart() {
+		
+		return ChartDAO.sdChart();
+	}
+
+	@Override
+	public List<Map<String, Object>> getChart(String sdcd) {
+		// TODO Auto-generated method stub
+		return ChartDAO.getChart(sdcd);
+	}
+
 
 
 }
