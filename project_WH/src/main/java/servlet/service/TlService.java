@@ -21,4 +21,13 @@ public interface TlService {
 
 	Map<String, Object> LegendInfo(String name);
 
+	List<Map<String, Object>> natural();
+
+	List<Map<String, Object>> deung();
+
+	List<Map<String, Object>> sdChart();
+
+	List<Map<String, Object>> getChart(String sdcd);
+
+
 }

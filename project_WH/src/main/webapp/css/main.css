@@ -1,0 +1,109 @@
+/* 컨테이너 스타일 */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 메인 스타일 */
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 버튼 컨테이너 스타일 */
+.btncon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 메뉴 스타일 */
+.menu {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 메뉴 버튼 스타일 */
+.menubar .list-group-item {
+    text-align: center;
+    background-color: #f8f9fa;
+    border: none;
+}
+
+.menubar .list-group-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 기능 영역 스타일 */
+.func {
+    margin-top: 20px;
+}
+
+/* 선택 영역 스타일 */
+#selectdiv {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 입력 버튼 스타일 */
+.insertbtn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.insertbtn:hover {
+    background-color: #0056b3;
+}
+
+/* 업로드 버튼 스타일 */
+#uploaddiv {
+    text-align: center;
+}
+
+#uploaddiv input[type="file"] {
+    display: none;
+}
+
+#uploaddiv button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#uploaddiv button:hover {
+    background-color: #218838;
+}
+
+/* 차트 영역 스타일 */
+#chartdiv {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#chartdiv button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#chartdiv button:hover {
+    background-color: #e0a800;
+}

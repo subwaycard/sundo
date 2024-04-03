@@ -11,8 +11,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,12 +55,37 @@ public class RestFullController {
 	   }
     
      
-    @PostMapping("/legend.do")
-    public Map<String, Object> legend(@RequestParam("legend") String legend) {
-        Map<String, Object> response = new HashMap<>();
-        return response;
-    }
 
+	@PostMapping("/legend.do")
+	public Map<String, Object> legend(@RequestParam("legend") String legend) {
+		
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    if (legend.equals("bjdeq")) {
+	    	response.put("legend",tlService.deung());
+	    	System.out.println(tlService.deung());	        
+	    } else if (legend.equals("bjdna")) {
+	    	response.put("legend",tlService.natural());
+	    	System.out.println(tlService.natural());	        
+	    }
+	    return response;
+	}
+	
+	 @PostMapping("chart.do")
+	   public List<Map<String,Object>> getChart(@RequestParam("sdcd")String sdcd){
+	      
+	      List<Map<String,Object>> list;
+	      if(sdcd.equals("0")) {
+	         list = tlService.sdChart();
+	      }else {
+	         
+	         list = tlService.getChart(sdcd);         
+	      }
+	      
+	      return list;
+	   }
+
+    
 
     @PostMapping("/fileUpload.do")
     public void fileUpload(@RequestParam("testfile") MultipartFile multi) throws IOException {
@@ -102,6 +130,8 @@ public class RestFullController {
        br.close();
        isr.close();
     }
+    
+    
     
     
    }
