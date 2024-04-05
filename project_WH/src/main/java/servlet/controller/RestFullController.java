@@ -71,16 +71,17 @@ public class RestFullController {
 	    return response;
 	}
 	
-	 @PostMapping("chart.do")
+	   @PostMapping("/chart.do")
 	   public List<Map<String,Object>> getChart(@RequestParam("sdcd")String sdcd){
 	      
 	      List<Map<String,Object>> list;
 	      if(sdcd.equals("0")) {
 	         list = tlService.sdChart();
 	      }else {
-	         
 	         list = tlService.getChart(sdcd);         
 	      }
+	      System.out.println(sdcd);
+	      System.out.println(list+"나야나야");
 	      
 	      return list;
 	   }

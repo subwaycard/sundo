@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChartMapper">
+	<select id="sdChart" resultType="Map">
+		SELECT sd_nm as sgg_nm, amount FROM d5sdtable
+	</select>
+
+	<select id="getChart" resultType="Map" parameterType="String">
+		SELECT sd_cd, sgg_nm, amount FROM d5sggtable WHERE sd_cd = #{sdcd}
+	</select>
+</mapper>
