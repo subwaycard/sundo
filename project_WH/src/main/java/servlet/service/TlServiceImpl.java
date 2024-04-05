@@ -64,16 +64,15 @@ public class TlServiceImpl implements TlService{
 	}
 
 	@Override
-	public List<Map<String, Object>> sdChart() {
-		
-		return ChartDAO.sdChart();
+	public List<Map<String, Object>> sdChart() {		
+		return chartDAO.sdChart();
 	}
 
 	@Override
 	public List<Map<String, Object>> getChart(String sdcd) {
-		// TODO Auto-generated method stub
-		return ChartDAO.getChart(sdcd);
+		return chartDAO.getChart(sdcd);
 	}
+
 
 
 

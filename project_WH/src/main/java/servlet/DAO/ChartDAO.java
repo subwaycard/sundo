@@ -13,19 +13,11 @@ public class ChartDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public static List<Map<String, Object>> sdChart() {
-		
-		return null;
+	public List<Map<String, Object>> sdChart() {
+		return sqlSession.selectList("ChartMapper.sdChart");
 	}
 
-	public static List<Map<String, Object>> getChart(String sdcd) {
-		
-		return null;
+	public List<Map<String, Object>> getChart(String sdcd) {
+		return sqlSession.selectList("ChartMapper.getChart", sdcd);
 	}
-
-	
-	
-	
-
-
 }

@@ -29,5 +29,4 @@ public interface TlService {
 
 	List<Map<String, Object>> getChart(String sdcd);
 
-
 }

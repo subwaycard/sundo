@@ -1,109 +1,121 @@
-/* 컨테이너 스타일 */
-.container {
-    display: flex;
-    flex-direction: column;
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
     height: 100vh;
 }
 
-/* 메인 스타일 */
-.main {
-    flex: 1;
+.container {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header, .footer {
+    height: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #BDBDBD;
 }
 
-/* 버튼 컨테이너 스타일 */
-.btncon {
+.main {
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-left: 1px solid #BDBDBD;
 }
 
-/* 메뉴 스타일 */
+.map {
+    width: 70%;
+    position: relative;
+}
+
+.btncon {
+    width: 30%;
+}
+
 .menu {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    height: 100%;
+    display: flex;
 }
 
-/* 메뉴 버튼 스타일 */
-.menubar .list-group-item {
+.menubar {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #BDBDBD;
+}
+
+.menubar button {
+    padding: 8px 4px;
     text-align: center;
-    background-color: #f8f9fa;
-    border: none;
+    border-left: none;
+    border-right: none;
 }
 
-.menubar .list-group-item.active {
-    background-color: #007bff;
-    color: white;
-}
-
-/* 기능 영역 스타일 */
 .func {
-    margin-top: 20px;
-}
-
-/* 선택 영역 스타일 */
-#selectdiv {
-    margin-bottom: 20px;
+    width: 75%;
+    padding: 10px;
     text-align: center;
 }
 
-/* 입력 버튼 스타일 */
+.func select {
+    width: 100%;
+    height: 25px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #585858;
+}
+
 .insertbtn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 100%;
 }
 
-.insertbtn:hover {
-    background-color: #0056b3;
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px;
 }
 
-/* 업로드 버튼 스타일 */
-#uploaddiv {
-    text-align: center;
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-#uploaddiv input[type="file"] {
-    display: none;
+table, th, td {
+    border: 1px solid #E6E6E6;
 }
 
-#uploaddiv button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+tbody > tr > td:nth-child(2) {
+    padding: 5px;
 }
 
-#uploaddiv button:hover {
-    background-color: #218838;
+tbody > tr > td:nth-child(1) {
+    padding: 0px;
 }
 
-/* 차트 영역 스타일 */
-#chartdiv {
-    text-align: center;
-    margin-top: 20px;
+tbody > tr > td > img {
+    width: 32px;
+    height: 32px;
 }
 
-#chartdiv button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #ffc107;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+#selectdiv > select {
+    width: 100%;
+    margin-bottom: 8px;
 }
 
-#chartdiv button:hover {
-    background-color: #e0a800;
+#sdChartSelect {
+    width: 100%;
+    margin-bottom: 10px;
 }
+
+#transdb,
+#charttbtn {
+    width: 100%;
+}
+
+
+
